@@ -1,0 +1,7 @@
+{
+	"layers": {
+		"countylayer": {
+			"src": "cb_2014_us_county_20m.shp"
+		}
+	}
+}
