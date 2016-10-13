@@ -1,7 +1,11 @@
 {
 	"layers": {
 		"countylayer": {
-			"src": "hawaii.shp"
+			"src": "original/cb_2014_us_county_20m.shp",
+			"filter": ["STATEFP", "is not", "72"]
 		}
+	},
+	"proj": {
+	  "id":"laea-usa"
 	}
 }
