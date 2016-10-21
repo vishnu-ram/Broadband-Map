@@ -19,7 +19,7 @@ map.loadMap('allv3.svg', function() {
 
 function colors() { 
 	map.getLayer('countylayer').style('fill', function(data) {
-		var ddi = parseInt(data.ddi);
+		var ddi = parseFloat(data.ddi);
 		if (ddi >= 80) {
 			return "#1a9641";
 		} if (ddi >= 60) {
