@@ -21,6 +21,8 @@ for record in sf.records():
 		info = data[fips]
 	except Exception, e:
 		print str(e)
+		record.extend([0, 0, 0])
+		w.records.append(record)
 	else:
 		record.extend(info)
 		w.records.append(record)
