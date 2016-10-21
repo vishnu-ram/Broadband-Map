@@ -2,7 +2,8 @@
 	"layers": {
 		"countylayer": {
 			"src": "Nation_edited.shp",
-			"attributes": ["FIPS", "County", "SE", "INFA", "DDI"]
+			"attributes": ["FIPS", "County", "SE", "INFA", "DDI"],
+			"simplify": 3
 		}
 	},
 	"proj": {
