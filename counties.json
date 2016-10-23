@@ -1,0 +1,12 @@
+{
+	"layers": {
+		"countylayer": {
+			"src": "Nation_edited.shp",
+			"simplify": 1,
+			"attributes": ["County", "DDI", "SE", "INFA"]
+		}
+	},
+	"proj": {
+	  "id":"laea-usa"
+	}
+}
