@@ -17,18 +17,22 @@ map.loadMap('allv3.svg', function() {
 
 });
 
+//colors assinged by quartiles 
 function colors() { 
 	map.getLayer('countylayer').style('fill', function(data) {
 		var ddi = parseFloat(data.ddi);
-		if (ddi >= 80) {
-			return "#1a9641";
-		} if (ddi >= 60) {
-			return "#a6d96a";
-		} if (ddi >= 40 ) {
-			return "#ffffbf";
-		} if (ddi >= 20 ) {
-			return "#fdae61";
+		if (ddi <= 38.12357875) { //1st quartile
+			return "#fef0d9";
+		} else if (ddi <= 50.8602104) {
+			return "#fdcc8a";
+		} else if (ddi <= 64.03133336 ) {
+			return "#fc8d59";
+		} else { //4th quartile
+			return "#d7301f";
 		}
-		return "#d7191c";
 	});
+}
+
+function legend(){
+	
 }
