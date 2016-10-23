@@ -14,6 +14,13 @@ map.loadMap('allv3.svg', function() {
 	//animations on hover (change opacity, outline county, stuff like that)
 	//search functionality
 	//loading icon before map comes up?
+	//styling
+	//add state layer
+	//reduce svg file size
+	//make responsive for all screen widths
+	//crop out alaska's really small islands? 
+
+	initPanZoom();	
 
 });
 
@@ -31,4 +38,35 @@ function colors() {
 			return "#d7301f";
 		}
 	});
+}
+
+function initPanZoom() {
+	var panZoom = map.paper.panzoom();
+	panZoom.enable()
+
+    setInterval(function() {
+    	$('h1').html(panZoom.currZoom +' x:'+panZoom.currPos.x.toFixed(0)+' y:'+panZoom.currPos.y.toFixed(0));
+    }, 50);
+    var css = '<style type="text/css">.grabbing { cursor: url(data:image/x-icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAAH/AAAB/wAAA/0AAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//+AB///wAf//4AH//+AD///yT/////////////////////////////8=), pointer !important; } .map-controls div { cursor:pointer; font-size: 20px; color: #777; font-weight:bold; font-family: Helvetica; line-height: 28px; text-align:center;border: 1px solid #bbb; } .map-controls div:hover { border: 1px solid #999; color: #000; }</style>';
+    $('body').append(css);
+
+    // init pan zoom controls
+    var ctrls = $('<div />'), up = $('<div>+</div>'), down = $('<div>-</div>');
+    ctrls
+    	.addClass('map-controls')
+    	.css({ position: 'relative', top: -80, left: 30, 'z-index': 1000 })
+    	.append(up).append(down);
+    up.css({ 'border-radius': '14px 14px 0 0', width: 28, height: 28, position: 'absolute',
+    	top: 0, left: 0, background: '#fff' });
+   	down.css({ 'border-radius': '0 0 14px 14px', width: 28, height: 28, position: 'absolute',
+    	top: 29, left: 0, background: '#fff' })
+    $('#map').parent().append(ctrls);
+    up.click(function (e) {
+        panZoom.zoomIn(1);
+        e.preventDefault();
+    });
+    down.click(function (e) {
+        panZoom.zoomOut(1);
+        e.preventDefault();
+    });
 }

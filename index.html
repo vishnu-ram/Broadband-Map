@@ -2,18 +2,35 @@
 <html>
 
 	<head>
+		<link rel="stylesheet" type="text/css" href="static/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="static/panzoom.css">
 		<link rel="stylesheet" type="text/css" href="styles.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Broadband Map</title>
 	</head>
 
 	<body>
 		<div class="container">
-			<div id="map"></div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="search" type="text" placeholder="Enter a county name..">
+					<label for="search">Search</label>
+				</div>
+			</div>
+			<div class="row" id="map-row">
+				<div class="col s12">
+					<div id="map-container">
+						<div id="map"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="static/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.6/raphael.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/kartograph-js/0.8.7/kartograph.min.js"></script>
+		<script src="static/raphael.pan-zoom.min.js"></script>
 		<script src="script.js"></script>
 
 	</body>

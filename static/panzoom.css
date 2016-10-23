@@ -1,0 +1,4 @@
+
+#mapControls { position: relative; left: 15px; top: -80px; width: 29px; z-index: 200; }
+#mapControls #up { display: block; height: 26px; width: 29px; }
+#mapControls #down { display: block; height: 27px; width: 29px; }
