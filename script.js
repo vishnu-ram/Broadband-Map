@@ -40,6 +40,7 @@ function colors() {
 	});
 }
 
+//pan + zoom function
 function initPanZoom() {
 	var panZoom = map.paper.panzoom();
 	panZoom.enable()
@@ -70,3 +71,11 @@ function initPanZoom() {
         e.preventDefault();
     });
 }
+
+//init search bar with choices
+$.getJSON("counties_list.json", function(d){
+	//console.log(d);
+	$('input.autocomplete').autocomplete({
+		data: d
+	});
+});
