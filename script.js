@@ -32,7 +32,3 @@ function colors() {
 		}
 	});
 }
-
-function legend(){
-	
-}
