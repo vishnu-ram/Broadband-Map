@@ -72,10 +72,12 @@ function initPanZoom() {
     });
 }
 
-//init search bar with choices
-$.getJSON("counties_list.json", function(d){
-	//console.log(d);
-	$('input.autocomplete').autocomplete({
-		data: d
+$(document).ready(function() {
+	//init search bar with choices
+	$.getJSON("counties_list.json", function(d){
+		//console.log(d);
+		$('input.autocomplete').autocomplete({
+			data: d
+		});
 	});
-});
+})
