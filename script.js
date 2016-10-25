@@ -4,7 +4,7 @@ map.loadMap('allv3.svg', function() {
 	map.addLayer('countylayer');
 
 	//outlines + colors
-	map.getLayer('countylayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6);
+	map.getLayer('countylayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
 	colors();
 
 	//TODO
