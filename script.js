@@ -40,6 +40,8 @@ function colors() {
 	});
 }
 
+
+
 //pan + zoom function
 function initPanZoom() {
 	var panZoom = map.paper.panzoom();
@@ -72,6 +74,10 @@ function initPanZoom() {
     });
 }
 
+function resetZoom() {
+	map.paper.setViewBox(0, 0, map.paper.width, map.paper.height);
+}
+
 $(document).ready(function() {
 	//init search bar with choices
 	$.getJSON("counties_list.json", function(d){
@@ -88,6 +94,19 @@ $(document).ready(function() {
 		var pathData = map.getLayer('countylayer').getPaths({'county': county});
 		var id = pathData[0].svgPath.id;
 		var coords = map.paper.getById(id).getBBox();
+		//think about edge cases for this.. e.g. if county is by edge of map
 		map.paper.setViewBox(coords['x']-2, coords['y']-2, coords['width']+4, coords['height']+4, true)
+	})
+
+	$('#search').blur(function() {
+		if ($(this).val().trim() == '') {
+			resetZoom();
+		}
+	});
+
+	$('#search').keydown(function(e) {
+		if (e.which == 13) {
+			resetZoom();
+		}
 	})
 })
