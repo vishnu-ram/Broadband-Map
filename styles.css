@@ -7,3 +7,13 @@
 .input-field {
 	padding-top: 1.5rem;
 }
+
+/*@media (max-width: 767px) { 
+	#map-container {
+		max-height: 320px;
+	}
+}
+
+@media (max-width: 480px) { 
+	
+}*/
