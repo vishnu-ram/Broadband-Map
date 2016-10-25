@@ -10,7 +10,7 @@ map.loadMap('allv3.svg', function() {
 	//TODO
 	//tooltip on hover
 	//legend
-	//zoom, click and drag, pan, etc
+	//FIX zoom, click and drag, pan, etc
 	//animations on hover (change opacity, outline county, stuff like that)
 	//search functionality
 	//loading icon before map comes up?
@@ -80,4 +80,14 @@ $(document).ready(function() {
 			data: d
 		});
 	});
+
+	//function triggered when search option is clicked
+	//TO DO: add animation for zooming in?
+	$(document).on('click', 'li', function(){
+		var county = $(this).text().trim();
+		var pathData = map.getLayer('countylayer').getPaths({'county': county});
+		var id = pathData[0].svgPath.id;
+		var coords = map.paper.getById(id).getBBox();
+		map.paper.setViewBox(coords['x']-2, coords['y']-2, coords['width']+4, coords['height']+4, true)
+	})
 })
