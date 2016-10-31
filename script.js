@@ -4,7 +4,6 @@
 //tooltip on hover
 //legend
 //animations on hover (change opacity, outline county, stuff like that)
-//add state layer
 //styling maybe?
 
 //kexin:
@@ -17,7 +16,8 @@
 
 var map = kartograph.map('#map');
 
-map.loadMap('allv3.svg', function() {
+map.loadMap('allv4.svg', function() {
+
 	map.addLayer('countylayer');
 
 	//outlines + colors
@@ -27,7 +27,13 @@ map.loadMap('allv3.svg', function() {
 	//initPanZoom();
 
 	resetZoom();
-	map.paper.setSize('100%', '100%');	
+
+	map.addLayer('statelayer', {
+		styles: {
+			'stroke':'#6C7A89',
+			'stroke-width': 2,
+		}
+	});
 
 });
 
