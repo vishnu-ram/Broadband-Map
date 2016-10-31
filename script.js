@@ -18,20 +18,21 @@
 var map = kartograph.map('#map');
 
 map.loadMap('allv3.svg', function() {
-	map.addLayer('countylayer');
+	map.loadCSS('jquery.qtip.css', function(){
+		map.addLayer('countylayer');
+		//map.addLayer('statelayer')
+
+		//tooltip on hover
+		$.fn.qtip.defaults.style.classes = 'qtip-modal';
+		map.getLayer('countylayer').tooltips(function(data) {
+			return ['County: <b>' + data.county, 'Digital Divide: <b>' + data.ddi];
+		})
+	});
 
 	//outlines + colors
 	map.getLayer('countylayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
 	colors();
-
-	//tooltip on hover
-	map.getLayer('countylayer', {
-		tooltips: function(data) {
-			return [data.county, 'Digital Divide: ' + data.ddi];
-		}
-	});
-
-	//initPanZoom();
+	//map.getLayer('statelayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
 
 	resetZoom();
 	map.paper.setSize('100%', '100%');	
