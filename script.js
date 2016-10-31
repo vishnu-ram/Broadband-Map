@@ -4,7 +4,7 @@
 //tooltip on hover
 //legend
 //animations on hover (change opacity, outline county, stuff like that)
-//add state layer
+//add state layer **probably can't happen until later 
 //styling maybe?
 
 //kexin:
@@ -23,6 +23,13 @@ map.loadMap('allv3.svg', function() {
 	//outlines + colors
 	map.getLayer('countylayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
 	colors();
+
+	//tooltip on hover
+	map.getLayer('countylayer', {
+		tooltips: function(data) {
+			return [data.county, 'Digital Divide: ' + data.ddi];
+		}
+	});
 
 	//initPanZoom();
 
