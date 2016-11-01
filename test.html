@@ -1,41 +1,116 @@
 <!DOCTYPE html>
 
-<link rel="stylesheet" type="text/css" href="static/materialize.min.css">
-<style>
+<head>
+  <link rel="stylesheet" type="text/css" href="static/materialize.min.css">
+  <style>
 
-.counties {
-  stroke: #6C7A89;
-  stroke-width: .7;
-}
+  svg {
+    display: block;
+    margin: 0 auto;
+  }
 
-.states {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
+  .counties {
+    stroke: #6C7A89;
+    stroke-width: .7;
+  }
 
-#map-container {
-  width: 90%;
-  margin: auto;
-}
+  .states {
+    fill: none;
+    stroke: #6C7A89;
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
 
-</style>
-<div id="map-container">
-  <div class="row">
-    <div id="map">
-      <svg width="960" height="600"></svg>
+  #map-container {
+    width: 90%;
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  .d3-tip {
+    line-height: 1.3;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+    border-radius: 2px;
+  }
+
+  /* Creates a small triangle extender for the tooltip */
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+
+  /* Style northward tooltips differently */
+  .d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  #legend { 
+    list-style: none; 
+  }
+
+  .legend li { 
+    float: left; margin-right: 10px; 
+  }
+
+  #legend span {
+    float: left; 
+    width: 35px; 
+    height: 15px; 
+    margin-top: 2px;
+    margin-right: 5px;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div id="map-container">
+    <div class="row">
+      <div class= "col s12 center">
+        <h3>Broadband Access Map</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div id="map">
+        <svg width="1200" height="700"
+        viewBox="0 0 1200 700"
+        preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m8 offset-m2">
+        <ul id = "legend">
+          <li><span style="background-color:#fef0d9;"></span>0 - 38.12</li>
+          <li><span style="background-color:#fdcc8a;"></span>38.12 - 50.86</li>
+          <li><span style="background-color:#fc8d59;"></span>50.86 - 64.03</li>
+          <li><span style="background-color:#d7301f;"></span>64.03 - 100</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 m8 offset-m2">
+        <input id="search" type="text" placeholder="Enter a county name.." class="autocomplete">
+        <label for="search">Search</label>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="input-field col s12">
-      <input id="search" type="text" placeholder="Enter a county name.." class="autocomplete">
-      <label for="search">Search</label>
-    </div>
-  </div>
-</div>
+</body>
+
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="d3-tip.js"></script>
 <script>
 
 var zoom = d3.zoom()
@@ -66,7 +141,7 @@ var quantize = function(ddi) {
 }
 
 var projection = d3.geoAlbersUsa()
-    .scale(1280)
+    .scale(1600)
     .translate([width / 2, height / 2]);
 
 var path = d3.geoPath()
@@ -75,9 +150,10 @@ var path = d3.geoPath()
 d3.queue()
     .defer(d3.json, "us1.json")
     .defer(d3.csv, "us2014.csv")
+    .defer(d3.json, "us.json")
     .await(ready);
 
-function ready(error, us, data) {
+function ready(error, us, data, state) {
   if (error) throw error;
 
   var rateById = {}
@@ -85,6 +161,15 @@ function ready(error, us, data) {
   data.forEach(function(d) {
     rateById[d.FIPS] = +d.DDI
   });
+
+  var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>" + d.properties.NAME + " County</strong><br>DDI:" + rateById[d.properties.STATE+d.properties.COUNTY] ;
+  })
+
+  svg.call(tip)
 
   svg.append("g")
       .attr("class", "counties")
@@ -103,6 +188,27 @@ function ready(error, us, data) {
         }
         return "c" + id;
       })
+      .on("mouseenter", function(d) {
+        tip.show(d);
+        d3.select(this).style("fill-opacity", 0.5)
+          .style("stroke-opacity", 1)
+          .style("stroke-width", 2);
+      })
+      .on("mouseleave", function(d) {
+        tip.hide(d);
+        d3.select(this).style("fill-opacity", 1)
+          .style("stroke-opacity", 0.6)
+          .style("stroke-width", .7);
+      });
+
+  // var mesh = topojson.mesh(states, states.features, function(a, b) { return a !== b; });
+  // console.log(mesh);
+  // console.log(states.features);
+
+  svg.select("g").append("path")
+      .datum(topojson.mesh(state, state.objects.states, function(a, b) { return a !== b; }))
+      .attr("class", "states")
+      .attr("d", path);
 
 }
 </script>
