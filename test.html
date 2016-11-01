@@ -22,7 +22,7 @@
   }
 
   #map-container {
-    width: 90%;
+    width: 80%;
     margin: auto;
     padding-top: 2rem;
   }
@@ -67,7 +67,7 @@
   #legend span {
     float: left; 
     width: 35px; 
-    height: 15px; 
+    height: 12px; 
     margin-top: 2px;
     margin-right: 5px;
   }
@@ -77,20 +77,20 @@
 
 <body>
   <div id="map-container">
-    <div class="row">
+    <div class="row" style="margin-bottom: 0px;">
       <div class= "col s12 center">
         <h5>Digital Divide Mapped</h5>
       </div>
     </div>
     <div class="row">
       <div id="map">
-        <svg width="1200" height="720"
-        viewBox="0 0 1200 720"
+        <svg width="1000" height="650"
+        viewBox="0 0 1000 650"
         preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
     <div class="row">
-      <div class="col s12 m8 offset-m2">
+      <div class="col s12 m12">
         <ul id = "legend">
             <h6>Digital Divide<h6>
             <li><span style="background-color:#fef0d9;"></span>Low</li>
@@ -101,7 +101,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col s12 m8 offset-m2">
+      <div class="input-field col s12 m12">
         <input id="search" type="text" placeholder="Enter a county name.." class="autocomplete">
         <label for="search">Search</label>
       </div>
@@ -142,7 +142,7 @@ var quantize = function(ddi) {
 }
 
 var projection = d3.geoAlbersUsa()
-    .scale(1600)
+    .scale(1300)
     .translate([width / 2, height / 2]);
 
 var path = d3.geoPath()
@@ -160,7 +160,7 @@ function ready(error, us, data, state) {
   var rateById = {}
 
   data.forEach(function(d) {
-    rateById[d.FIPS] = +d.DDI
+    rateById[d.FIPS] = +d.DDI;
   });
 
   var tip = d3.tip()
