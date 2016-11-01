@@ -26,7 +26,7 @@ map.loadMap('allv4.svg', function() {
 
 	$.fn.qtip.defaults.style.classes = 'qtip-light';
 	map.getLayer('countylayer').tooltips(function(data) {
-			return ['<b>' + data.county.split(',')[0] + ' County', 'Digital Divide: <b>' + data.ddi];
+			return ['<b>' + data.county.split(',')[0] + ' County', 'Digital Divide: <b>' + data.ddi ];
 	});
 
 	map.addLayer('statelayer', {
