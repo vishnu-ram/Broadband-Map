@@ -2,6 +2,7 @@
 	max-width: 80% ;
 	padding-top: 2rem;
 	margin: auto;
+	height: auto;
 }
 
 .input-field {
@@ -12,8 +13,10 @@
 	#map-container {
 		max-height: 320px;
 	}
-}
+}*/
 
 @media (max-width: 480px) { 
-	
-}*/
+	#all-container {
+		max-width: 100%;
+	}
+}

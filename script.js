@@ -17,25 +17,29 @@
 
 var map = kartograph.map('#map');
 
-map.loadMap('allv3.svg', function() {
-	map.loadCSS('jquery.qtip.css', function(){
-		map.addLayer('countylayer');
-		//map.addLayer('statelayer')
-
-		//tooltip on hover
-		$.fn.qtip.defaults.style.classes = 'qtip-modal';
-		map.getLayer('countylayer').tooltips(function(data) {
-			return ['County: <b>' + data.county, 'Digital Divide: <b>' + data.ddi];
-		})
-	});
+map.loadMap('allv4.svg', function() {
+	map.addLayer('countylayer');
 
 	//outlines + colors
 	map.getLayer('countylayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
 	colors();
-	//map.getLayer('statelayer').style('stroke', '#6C7A89').style('stroke-opacity', 0.6).style('stroke-width', 0.7);
+
+	$.fn.qtip.defaults.style.classes = 'qtip-light';
+	map.getLayer('countylayer').tooltips(function(data) {
+			return ['<b>' + data.county.split(',')[0] + ' County', 'Digital Divide: <b>' + data.ddi];
+	});
+
+	map.addLayer('statelayer', {
+		styles: {
+			'stroke':'#6C7A89',
+			'stroke-width': 2,
+		}
+	});
+
+	console.log('state')
 
 	resetZoom();
-	map.paper.setSize('100%', '100%');	
+	map.paper.setSize('100%', '100%');
 
 });
 
@@ -90,7 +94,7 @@ function colors() {
 // }
 
 function resetZoom() {
-	map.paper.setViewBox(0, 0, map.paper.width, map.paper.height);
+	map.paper.setViewBox(0, 0, map.paper.width, map.paper.height, true);
 }
 
 $(document).ready(function() {

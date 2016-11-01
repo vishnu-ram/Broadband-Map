@@ -2,8 +2,12 @@
 	"layers": {
 		"countylayer": {
 			"src": "Nation_edited.shp",
-			"simplify": 1,
-			"attributes": ["County", "DDI", "SE", "INFA"]
+			"attributes": ["County", "DDI", "SE", "INFA"],
+			"simplify": 20
+		},
+		"statelayer": {
+			"src": "cb_2014_us_state_20m/cb_2014_us_state_20m.shp",
+			"simplify": 20
 		}
 	},
 	"proj": {
