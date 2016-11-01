@@ -20,3 +20,19 @@
 		max-width: 100%;
 	}
 }
+
+#legend { 
+	list-style: none; 
+}
+
+.legend li { 
+	float: left; margin-right: 10px; 
+}
+
+#legend span {
+	float: left; 
+	width: 35px; 
+	height: 15px; 
+	margin-top: 2px;
+	margin-right: 5px;
+}

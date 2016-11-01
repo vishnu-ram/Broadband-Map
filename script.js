@@ -26,7 +26,19 @@ map.loadMap('allv4.svg', function() {
 
 	$.fn.qtip.defaults.style.classes = 'qtip-light';
 	map.getLayer('countylayer').tooltips(function(data) {
-			return ['<b>' + data.county.split(',')[0] + ' County', 'Digital Divide: <b>' + data.ddi ];
+			return ['<b>' + data.county.split(',')[0] + ' County', 'Digital Divide: <b>' + data.ddi + '</b><br>Socioeconomic: <b>' + data.se + '</b><br>Infrastructure/Adoption <b>' + data.infa ];
+	});
+
+	map.getLayer('countylayer').on('mouseenter', function(data, path, event) {
+		path.attr('fill-opacity', 0.5);
+		path.attr('stroke-opacity', 1);
+		path.attr('stroke-width', 1.5);
+	});
+
+	map.getLayer('countylayer').on('mouseleave', function(data, path, event) {
+		path.attr('fill-opacity', 1);
+		path.attr('stroke-opacity', 0.6);
+		path.attr('stroke-width', .7);
 	});
 
 	map.addLayer('statelayer', {
@@ -36,7 +48,6 @@ map.loadMap('allv4.svg', function() {
 		}
 	});
 
-	console.log('state')
 
 	resetZoom();
 	map.paper.setSize('100%', '100%');
@@ -44,7 +55,8 @@ map.loadMap('allv4.svg', function() {
 });
 
 //colors assinged by quartiles 
-function colors() { 
+function colors() {
+ 
 	map.getLayer('countylayer').style('fill', function(data) {
 		var ddi = parseFloat(data.ddi);
 		if (ddi <= 38.12357875) { //1st quartile
