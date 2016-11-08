@@ -29,7 +29,6 @@
 
   .d3-tip {
     line-height: 1.3;
-    font-weight: bold;
     padding: 12px;
     background: rgba(255, 255, 255, 0.8);
     color: #000;
@@ -149,25 +148,27 @@ var path = d3.geoPath()
     .projection(projection);
 
 d3.queue()
-    .defer(d3.json, "us1.json")
-    .defer(d3.csv, "us2014.csv")
-    .defer(d3.json, "us.json")
+    .defer(d3.json, "Nation_edited_simplified.json")
+    // .defer(d3.csv, "us2014.csv")
+    // .defer(d3.json, "us.json")
     .await(ready);
 
-function ready(error, us, data, state) {
+function ready(error, us) {
   if (error) throw error;
 
-  var rateById = {}
+  // var rateById = {}
 
-  data.forEach(function(d) {
-    rateById[d.FIPS] = +d.DDI;
-  });
+  // data.forEach(function(d) {
+  //   rateById[d.FIPS] = +d.DDI;
+  // });
 
   var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>" + d.properties.NAME + " County</strong><br>DDI:" + rateById[d.properties.STATE+d.properties.COUNTY] ;
+    // return "<strong>" + d.properties.NAME + " County</strong><br>DDI:" + rateById[d.properties.STATE+d.properties.COUNTY] ;
+    var name = d.properties.County.split(',')[0] + " County"
+    return "<strong>" + name + "</strong><br><strong>Digital Divide:</strong> " + d.properties.DDI + "<br><strong>Socioeconomic:</strong> " + d.properties.SE + "<br><strong>Infrastructure/Adoption:</strong> " + d.properties.INFA;
   })
 
   svg.call(tip)
@@ -178,15 +179,15 @@ function ready(error, us, data, state) {
       .data(us.features)
       .enter().append("path")
       .style("fill", function(d) {
-        var id = d.properties.STATE + d.properties.COUNTY;
-        return quantize(rateById[id]);
+        return quantize(parseFloat(d.properties.DDI));
        })
       .attr("d", path)
       .attr("id", function(d) { 
-        var id = d.properties.STATE + d.properties.COUNTY;
-        if (id[0] == "0") {
-          id = id.substring(1, id.length);
-        }
+        // var id = d.properties.STATE + d.properties.COUNTY;
+        // if (id[0] == "0") {
+        //   id = id.substring(1, id.length);
+        // }
+        var id = d.fips;
         return "c" + id;
       })
       .on("mouseenter", function(d) {
@@ -206,10 +207,10 @@ function ready(error, us, data, state) {
   // console.log(mesh);
   // console.log(states.features);
 
-  svg.select("g").append("path")
-      .datum(topojson.mesh(state, state.objects.states, function(a, b) { return a !== b; }))
-      .attr("class", "states")
-      .attr("d", path);
+  // svg.select("g").append("path")
+  //     .datum(topojson.mesh(state, state.objects.states, function(a, b) { return a !== b; }))
+  //     .attr("class", "states")
+  //     .attr("d", path);
 
 }
 </script>
