@@ -174,7 +174,7 @@ var path = d3.geoPath()
     .projection(projection);
 
 d3.queue()
-    .defer(d3.json, "Nation_edited_simplified.json")
+    .defer(d3.json, "nation_edited_simplified.json")
     // .defer(d3.csv, "us2014.csv")
     //.defer(d3.json, "us.json")
     .await(ready);
